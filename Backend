@@ -1,10 +1,13 @@
 package com.library.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.library.entity.Students;
 import com.library.service.StudentService;
 
 @RestController
@@ -12,10 +15,12 @@ import com.library.service.StudentService;
 public class StudentController {
 	@Autowired
 	private StudentService service;
-	@GetMapping("/Students"){
+	@GetMapping("/Students")
+	public List<Students> getAllStudents(){
 		return service.getAllStudent();
 	}
 }
+
 package com.library.entity;
 
 import jakarta.persistence.Entity;
