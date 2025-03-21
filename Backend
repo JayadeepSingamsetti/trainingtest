@@ -1,0 +1,123 @@
+package com.library.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.library.service.StudentService;
+
+@RestController
+@CrossOrigin("*")
+public class StudentController {
+	@Autowired
+	private StudentService service;
+	@GetMapping("/Students"){
+		return service.getAllStudent();
+	}
+}
+package com.library.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Students {
+@Id
+private int rollno;
+private String name;
+private int mobileno;
+private String emailid;
+private String branch;
+public Students(int rollno, String name, int mobileno, String emailid, String branch) {
+	super();
+	this.rollno = rollno;
+	this.name = name;
+	this.mobileno = mobileno;
+	this.emailid = emailid;
+	this.branch = branch;
+}
+@Override
+public String toString() {
+	return "Students [rollno=" + rollno + ", name=" + name + ", mobileno=" + mobileno + ", emailid=" + emailid
+			+ ", branch=" + branch + "]";
+}
+public int getRollno() {
+	return rollno;
+}
+public void setRollno(int rollno) {
+	this.rollno = rollno;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public int getMobileno() {
+	return mobileno;
+}
+public void setMobileno(int mobileno) {
+	this.mobileno = mobileno;
+}
+public String getEmailid() {
+	return emailid;
+}
+public void setEmailid(String emailid) {
+	this.emailid = emailid;
+}
+public String getBranch() {
+	return branch;
+}
+public void setBranch(String branch) {
+	this.branch = branch;
+}
+public Students() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+}
+package com.library.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.library.entity.Students;
+
+public interface StudentsRepo extends JpaRepository<Students, java.lang.Integer> {
+
+}
+package com.library.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.library.entity.Students;
+import com.library.repo.StudentsRepo;
+
+@Service
+public class StudentService {
+	@Autowired
+	
+	private StudentsRepo repo;
+	public List<Students> getAllStudent(){
+		return repo.findAll();
+	}
+}
+# Application Name
+spring.application.name=Studentdisplay
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/student
+spring.datasource.username=root
+spring.datasource.password=mysql
+
+# Hibernate Settings
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Server Port
+server.port=8082
